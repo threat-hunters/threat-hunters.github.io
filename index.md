@@ -1,37 +1,27 @@
-## Welcome to GitHub Pages
+## Introduction
 
-You can use the [editor on GitHub](https://github.com/threat-hunters/threat-hunters.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+​	With the recent development in the cyber threat landscape, it became imperative to develop robust security measures to monitor, detect, and respond to such threats in a timely manner. By establishing proactive threat hunting techniques to thwart attackers from damaging the business, organizations can identify and categorize threat agents and protect the valuable assets against targeted attacks, by analyzing attacks on intentionally vulnerable systems and collect threat intelligence, in order to leverage their protection systems (such as Introsion Prevention Systems) to protect against targeted attacks.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
 
-### Markdown
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+### Building Honeypots
 
-```markdown
-Syntax highlighted code block
+​	Using different honeypots that are geographically distributed, we can capture and analyze the different attack trends, and identity the Tools, Techniques, and Procedures (TTPs) used by the attackers. The following sample of honeypots were distributed in three different locations (US, Germany, Japan).
 
-# Header 1
-## Header 2
-### Header 3
+![Image](https://github.com/threat-hunters/threat-hunters.github.io/blob/master/screenshots/honeypots.jpg?raw=true)
 
-- Bulleted
-- List
 
-1. Numbered
-2. List
 
-**Bold** and _Italic_ and `Code` text
+### Analysis via Splunk
 
-[Link](url) and ![Image](src)
-```
+​	The honeypots will capture all the necessary information needed for the analysis, including IP addresses, ports, packet signature, MD5 hashes and payloads of the malware executables, and the URL requests sent to the honeypots. The goal is generate the Indicators of Compromise (IOCs) that defines the incoming threats and precisely identiy their behavior.
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+![Image](https://github.com/threat-hunters/threat-hunters.github.io/blob/master/screenshots/splunk_intel.jpg?raw=true)
 
-### Jekyll Themes
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/threat-hunters/threat-hunters.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
 
-### Support or Contact
+### Adaptive Response
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+​	After collecting these information and identifying the Indicators of Compromise (IOCs), these information will be used to generate automated commands to the security controls implemented in the network. By using Suricata Intrusion Prevention System (IPS), we will leverage the ability to detect threats coming to the network by adding the newly idnetified threats from Splunk.
+
+![Image](https://github.com/threat-hunters/threat-hunters.github.io/blob/master/screenshots/suricata_sample.png?raw=true)

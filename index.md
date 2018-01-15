@@ -6,7 +6,7 @@
 
 ### Building Honeypots
 
-​	Using different honeypots that are geographically distributed, we can capture and analyze the different attack trends, and identity the Tools, Techniques, and Procedures (TTPs) used by the attackers. The following sample of honeypots were distributed in three different locations (US, Germany, Japan).
+​	Using different honeypots that are geographically distributed, we can capture and analyze the different attack trends, and identity the Tools, Techniques, and Procedures (TTPs) used by the attackers. The following sample of honeypots were distributed in three different locations (US, UK, Germany, Japan).
 
 ![Image](https://github.com/threat-hunters/threat-hunters.github.io/blob/master/screenshots/honeypots.jpg?raw=true)
 

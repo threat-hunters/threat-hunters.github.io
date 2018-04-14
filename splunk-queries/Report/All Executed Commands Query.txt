@@ -1,0 +1,3 @@
+This queries runs every hour for all commands executed by attackers. The results are output to the lookup file AllCommands.csv.
+
+index=main  command|table src command |stats count by command |sort -count|outputlookup AllCommands.csv

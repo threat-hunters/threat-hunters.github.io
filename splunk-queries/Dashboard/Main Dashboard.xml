@@ -1,0 +1,365 @@
+<form>
+  <label>Main dashboard</label>
+  <fieldset submitButton="false">
+    <input type="time" token="Timetoken">
+      <label></label>
+      <default>
+        <earliest>-24h@h</earliest>
+        <latest>now</latest>
+      </default>
+    </input>
+  </fieldset>
+  <row>
+    <panel>
+      <title>Accumulated Logs</title>
+      <single>
+        <search>
+          <query>index=main source="/var/log/mhn/mhn-splunk.log*" |stats count</query>
+          <earliest>0</earliest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="colorBy">value</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x65a637","0x6db7c6","0xf7bc38","0xf58f39","0xd93f3c"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">standard</option>
+        <option name="trendDisplayMode">absolute</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Collected Logs Today (Boston Time)</title>
+      <single>
+        <search>
+          <query>source="*mhn-splunk.log*" |eval _time=_time-14400|timechart  span=24h count</query>
+          <earliest>0</earliest>
+          <latest></latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x65a637","0x6db7c6","0xf7bc38","0xf58f39","0xd93f3c"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">inverse</option>
+        <option name="trendDisplayMode">percent</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+    </panel>
+    <panel>
+      <title>Collected Unique Logs Today (Boston Time)</title>
+      <single>
+        <search>
+          <query>source="*mhn-splunk.log*" |eval _time=_time-14400|timechart  span=24h dc(src) as count</query>
+          <earliest>0</earliest>
+          <latest></latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="colorBy">trend</option>
+        <option name="colorMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="numberPrecision">0</option>
+        <option name="rangeColors">["0x65a637","0x6db7c6","0xf7bc38","0xf58f39","0xd93f3c"]</option>
+        <option name="rangeValues">[0,30,70,100]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="showSparkline">1</option>
+        <option name="showTrendIndicator">1</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+        <option name="trendColorInterpretation">inverse</option>
+        <option name="trendDisplayMode">percent</option>
+        <option name="unitPosition">after</option>
+        <option name="useColors">1</option>
+        <option name="useThousandSeparators">1</option>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Attacks Overview (Boston Time)</title>
+      <chart>
+        <title>click and expand to show attack IPs</title>
+        <search>
+          <query>source="*mhn-splunk.log*" |eval _time=_time-14400| timechart span=1h count by app usenull=f useother=f</query>
+          <earliest>$Timetoken.earliest$</earliest>
+          <latest>$Timetoken.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.axisLabelsX.majorLabelStyle.overflowMode">ellipsisNone</option>
+        <option name="charting.axisLabelsX.majorLabelStyle.rotation">0</option>
+        <option name="charting.axisTitleX.text">Time</option>
+        <option name="charting.axisTitleX.visibility">visible</option>
+        <option name="charting.axisTitleY.text">Attack Number</option>
+        <option name="charting.axisTitleY.visibility">visible</option>
+        <option name="charting.axisTitleY2.visibility">visible</option>
+        <option name="charting.axisX.abbreviation">none</option>
+        <option name="charting.axisX.scale">linear</option>
+        <option name="charting.axisY.abbreviation">none</option>
+        <option name="charting.axisY.scale">linear</option>
+        <option name="charting.axisY2.abbreviation">none</option>
+        <option name="charting.axisY2.enabled">0</option>
+        <option name="charting.axisY2.scale">inherit</option>
+        <option name="charting.chart">line</option>
+        <option name="charting.chart.bubbleMaximumSize">50</option>
+        <option name="charting.chart.bubbleMinimumSize">10</option>
+        <option name="charting.chart.bubbleSizeBy">area</option>
+        <option name="charting.chart.nullValueMode">gaps</option>
+        <option name="charting.chart.showDataLabels">none</option>
+        <option name="charting.chart.sliceCollapsingThreshold">0.01</option>
+        <option name="charting.chart.stackMode">stacked</option>
+        <option name="charting.chart.style">shiny</option>
+        <option name="charting.drilldown">all</option>
+        <option name="charting.layout.splitSeries">0</option>
+        <option name="charting.layout.splitSeries.allowIndependentYRanges">0</option>
+        <option name="charting.legend.labelStyle.overflowMode">ellipsisMiddle</option>
+        <option name="charting.legend.mode">standard</option>
+        <option name="charting.legend.placement">right</option>
+        <option name="charting.lineWidth">2</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">0</option>
+        <option name="trellis.size">medium</option>
+        <option name="trellis.splitBy">app</option>
+        <drilldown>
+          <set token="app">$click.name2$</set>
+          <set token="startTime">$row._time$</set>
+        </drilldown>
+      </chart>
+    </panel>
+    <panel depends="$app$">
+      <title>$app$</title>
+      <chart>
+        <search>
+          <query>source="*mhn-splunk.log*" $app$ 
+            |eval _time=_time-14400 
+            |eval startTime="$startTime$"
+            |eval endTime=startTime + 1800
+            |where _time &gt;= startTime AND _time &lt;= endTime
+            |eval startreadable=strftime(startTime, "%Y-%m-%d %T")
+            |eval endreadable=strftime(endTime, "%Y-%m-%d %T")
+            |table _time startreadable endreadable src app
+            |stats count by src
+            |replace 192.168.2* with "Honeypot server at California (us-west-1)"
+            |replace 192.168.3* with "Honeypot server at Tokyo (ap-northeast-1)"
+            |replace 192.168.4* with "Honeypot server at Mumbai (ap-south-1)"
+            |replace 192.168.5* with "Honeypot server at Singapore (ap-southeast-1)"
+            |replace 192.168.6* with "Honeypot server at Sao Paulo (sa-east-1)"
+            |replace 192.168.7* with "Honeypot server at London (eu-west-2)"
+            |replace 192.168.9* with "Honeypot server at London"</query>
+          <earliest>$Timetoken.earliest$</earliest>
+          <latest>$Timetoken.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="charting.chart">pie</option>
+        <option name="charting.drilldown">none</option>
+        <option name="refresh.display">progressbar</option>
+      </chart>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Attack map</title>
+      <map>
+        <search>
+          <query>index=main |iplocation src | geostats count by src globallimit=0</query>
+          <earliest>$Timetoken.earliest$</earliest>
+          <latest>$Timetoken.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="drilldown">none</option>
+        <option name="mapping.choroplethLayer.colorBins">5</option>
+        <option name="mapping.choroplethLayer.colorMode">auto</option>
+        <option name="mapping.choroplethLayer.maximumColor">0xDB5800</option>
+        <option name="mapping.choroplethLayer.minimumColor">0x2F25BA</option>
+        <option name="mapping.choroplethLayer.neutralPoint">0</option>
+        <option name="mapping.choroplethLayer.shapeOpacity">0.75</option>
+        <option name="mapping.choroplethLayer.showBorder">1</option>
+        <option name="mapping.data.maxClusters">100</option>
+        <option name="mapping.legend.placement">bottomright</option>
+        <option name="mapping.map.center">(0,0)</option>
+        <option name="mapping.map.panning">1</option>
+        <option name="mapping.map.scrollZoom">0</option>
+        <option name="mapping.map.zoom">2</option>
+        <option name="mapping.markerLayer.markerMaxSize">50</option>
+        <option name="mapping.markerLayer.markerMinSize">10</option>
+        <option name="mapping.markerLayer.markerOpacity">0.8</option>
+        <option name="mapping.showTiles">1</option>
+        <option name="mapping.tileLayer.maxZoom">7</option>
+        <option name="mapping.tileLayer.minZoom">0</option>
+        <option name="mapping.tileLayer.tileOpacity">1</option>
+        <option name="mapping.type">marker</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="trellis.enabled">0</option>
+        <option name="trellis.scales.shared">1</option>
+        <option name="trellis.size">medium</option>
+      </map>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Signature (Suricata Honeypot)</title>
+      <table>
+        <search>
+          <query>source="*mhn-splunk.log*"  suricata |stats values(suricata_signature_id) as suricata_signature_id values(suricata_signature_rev) as suricata_signature_rev count by signature |sort -count</query>
+          <earliest>$Timetoken.earliest$</earliest>
+          <latest>$Timetoken.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">true</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>All Attempted Commands/URLs (Cowrie)</title>
+      <table>
+        <search>
+          <query>| inputlookup AllCommands.csv |table command count</query>
+          <earliest>-24h@h</earliest>
+          <latest>now</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">true</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+    <panel>
+      <title>SSH Username and Password (Cowrie)</title>
+      <table>
+        <search>
+          <query>source="*mhn-splunk.log*" 
+          |fields ssh_username, ssh_password 
+          |rename ssh_username as Username ssh_password as Password
+          |stats count as TotalCount by Username Password
+          |sort -TotalCount</query>
+          <earliest>$Timetoken.earliest$</earliest>
+          <latest>$Timetoken.latest$</latest>
+        </search>
+        <!-- Deleting sparkline for now
+        <format field="Trend" type="sparkline">
+          <option name="spotRadius">2</option>
+          <option name="minSpotColor">#05729b</option>
+          <option name="maxSpotColor">#072942</option>
+          <option name="height">25px</option>
+          <option name="fillColor">#CCDDFF</option>
+          <option name="lineWidth">1</option>
+          <option name="lineColor">#5379af</option>
+        </format>
+        -->
+        <option name="count">10</option>
+        <option name="drilldown">none</option>
+        <option name="rowNumbers">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Top 50 Attacks</title>
+      <table>
+        <search>
+          <query>source="*mhn-splunk.log*"  |iplocation src |rename src as SourceIP|top limit=50 SourceIP Country showperc=f</query>
+          <earliest>$Timetoken.earliest$</earliest>
+          <latest>$Timetoken.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">true</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+    <panel>
+      <title>Top 50 Target Ports</title>
+      <table>
+        <search>
+          <query>source=*/var/log/mhn/mhn-splunk.log* |rename dest_port as DestinationPort|top  limit=50 DestinationPort showperc=f</query>
+          <earliest>$Timetoken.earliest$</earliest>
+          <latest>$Timetoken.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">10</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="rowNumbers">true</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>p0f OS</title>
+      <table>
+        <search>
+          <query>source="*mhn-splunk.log*" p0f_os=* | where p0f_os!="???" |  top p0f_os | fields p0f_os, count</query>
+          <earliest>$Timetoken.earliest$</earliest>
+          <latest>$Timetoken.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">50</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">true</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+    <panel>
+      <title>p0f Apps</title>
+      <table>
+        <search>
+          <query>source="*mhn-splunk.log*" p0f_app=* | where p0f_app!="???" |  top p0f_app | fields p0f_app, count</query>
+          <earliest>$Timetoken.earliest$</earliest>
+          <latest>$Timetoken.latest$</latest>
+          <sampleRatio>1</sampleRatio>
+        </search>
+        <option name="count">50</option>
+        <option name="dataOverlayMode">none</option>
+        <option name="drilldown">none</option>
+        <option name="percentagesRow">false</option>
+        <option name="rowNumbers">true</option>
+        <option name="totalsRow">false</option>
+        <option name="wrap">true</option>
+      </table>
+    </panel>
+  </row>
+</form>

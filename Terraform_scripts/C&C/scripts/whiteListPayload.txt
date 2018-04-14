@@ -1,0 +1,7 @@
+PAYLOAD : "ls"
+PAYLOAD : "history"
+PAYLOAD : "sh"
+PAYLOAD : "wget"
+PAYLOAD : "cat"
+PAYLOAD : "cd"
+PAYLOAD : "rm"

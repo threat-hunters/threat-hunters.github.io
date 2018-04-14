@@ -1,0 +1,15 @@
+This query runs every hour for ATT&CK Matrix Dashboard. It runs in "all time" fashion.
+
+source="*mhn-splunk.log*" 
+        |eval D_ProcessDiscovery=case(command like "%cat /proc/%", "1")
+        |eval PE_setuid = case(command like "%chmod%","1")
+        |eval PE_sudo = case(command like "%sudo%","1")
+        |eval CA_BashHistory=case(command like "%bash_history%","1",command like "%history%","1")        
+        |eval CA_BruteForce=if(match(signature,".*[b,B]rute.*"),"1","0")
+        |eval LM_RemoteFileCopy=case(command like "%wget%","1",command like "%curl%","1")
+        |eval D_ConfigDiscovery=if(match(signature,".*[cC]onfig.*"),"1","0")
+        |eval LM_WindowsAdminShards=if(match(signature,".*ADMIN\$.*"),"1","0")
+        |where isnotnull(D_ProcessDiscovery) OR D_ConfigDiscovery=1 OR isnotnull(PE_setuid) OR isnotnull(PE_sudo) OR isnotnull(CA_BashHistory) OR CA_BruteForce=1 OR isnotnull(LM_RemoteFileCopy)OR LM_WindowsAdminShards=1
+        |fillnull value="0" D_ProcessDiscovery,D_ConfigDiscovery,PE_setuid,PE_sudo,CA_BashHistory,LM_RemoteFileCopy,CA_BruteForce,LM_WindowsAdminShards
+        |table _time, src command signature D_ProcessDiscovery,D_ConfigDiscovery,PE_setuid,PE_sudo,CA_BashHistory,LM_RemoteFileCopy,CA_BruteForce,LM_WindowsAdminShards
+        

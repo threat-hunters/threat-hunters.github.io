@@ -1,0 +1,167 @@
+<dashboard>
+  <label>ATT&amp;CK Matrix Map</label>
+  <search id="basesearch">
+    <query>
+      |inputlookup AttackMatrics.csv
+    </query>
+  </search>
+  <row>
+    <panel>
+      <title>The count is based on the report running every hour at all time fashion.</title>
+      <html>
+        <h3>
+          <![CDATA[Click on the number -> direct you to the Detail Dashboard only showing data related to this matrix.]]>
+        </h3>
+        <br/>
+        <a href="https://attack.mitre.org/wiki/Main_Page" target="_blank">MITRE ATT&amp;CK Matrix Explanation</a>
+      </html>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <title>Discovery</title>
+      <single>
+        <title>Process Discovery (cat /proc/)</title>
+        <search base="basesearch">
+          <query>
+            |chart sum(D_ProcessDiscovery) as D_ProcessDiscovery
+          </query>
+        </search>
+        <option name="drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
+        <drilldown>
+          <link target="_blank">
+            <![CDATA[/app/ThreatHuntingCapstoneProject/detail_info_dashboard?form.command=*proc*&form.signature=*proc*&form.app=*]]>
+          </link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Priviledge Escalation</title>
+      <single>
+        <title>setuid/setgid</title>
+        <search base="basesearch">
+          <query>
+            |chart sum(PE_setuid) as PE_setuid
+          </query>
+        </search>
+        <option name="drilldown">all</option>
+        <option name="rangeColors">["0xf58f39","0xd93f3c"]</option>
+        <option name="rangeValues">[1000]</option>
+        <option name="refresh.display">progressbar</option>
+        <option name="useColors">0</option>
+        <drilldown>
+          <link target="_blank">
+            <![CDATA[/app/ThreatHuntingCapstoneProject/detail_info_dashboard?form.command=*chmod*&form.signature=*chmod*&form.app=*]]>
+          </link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Lateral Movement</title>
+      <single>
+        <title>Remote File Copy (wget/curl)</title>
+        <search base="basesearch">
+          <query>
+            |chart sum(LM_RemoteFileCopy) as LM_RemoteFileCopy
+          </query>
+        </search>
+        <option name="drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
+        <drilldown>
+          <link target="_blank">
+            <![CDATA[/app/ThreatHuntingCapstoneProject/detail_info_dashboard?form.command=*wget*&form.signature=*wget*&form.app=*]]>
+          </link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <title>Credential Access</title>
+      <single>
+        <title>Bash History (bash_history or history)</title>
+        <search base="basesearch">
+          <query>
+            |chart sum(CA_BashHistory) as CA_BashHistory
+          </query>
+        </search>
+        <option name="drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
+        <drilldown>
+          <link target="_blank">
+            <![CDATA[/app/ThreatHuntingCapstoneProject/detail_info_dashboard?form.command=*history*&form.signature=*history*&form.app=*]]>
+          </link>
+        </drilldown>
+      </single>
+    </panel>
+  </row>
+  <row>
+    <panel>
+      <single>
+        <title>System Network Configuration Discovery</title>
+        <search base="basesearch">
+          <query>
+            |chart sum(D_ConfigDiscovery) as D_ConfigDiscovery
+          </query>
+        </search>
+        <option name="drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
+        <drilldown>
+          <link target="_blank">
+            <![CDATA[/app/ThreatHuntingCapstoneProject/detail_info_dashboard?form.command=*config*&form.signature=*config*&form.app=*]]>
+          </link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>sudo</title>
+        <search base="basesearch">
+          <query>
+            |chart sum(PE_sudo) as PE_sudo
+          </query>
+        </search>
+        <option name="drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
+        <drilldown>
+          <link target="_blank">
+            <![CDATA[/app/ThreatHuntingCapstoneProject/detail_info_dashboard?form.command=*sudo*&form.signature=*sudo*&form.app=*]]>
+          </link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>Windows Admin Shares (ADMIN$)</title>
+        <search base="basesearch">
+          <query>
+            |chart sum(LM_WindowsAdminShards) as LM_WindowsAdminShards
+          </query>
+        </search>
+        <option name="drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
+        <drilldown>
+          <link target="_blank">
+            <![CDATA[/app/ThreatHuntingCapstoneProject/detail_info_dashboard?form.command=*ADMIN$*&form.signature=*ADMIN$*&form.app=*]]>
+          </link>
+        </drilldown>
+      </single>
+    </panel>
+    <panel>
+      <single>
+        <title>Brute Force (suricata signature)</title>
+        <search base="basesearch">
+          <query>
+            |chart sum(CA_BruteForce) as CA_BruteForce
+          </query>
+        </search>
+        <option name="drilldown">all</option>
+        <option name="refresh.display">progressbar</option>
+        <drilldown>
+          <link target="_blank">
+            <![CDATA[/app/ThreatHuntingCapstoneProject/detail_info_dashboard?form.command=*brute*&form.signature=*brute*&form.app=*]]>
+          </link>
+        </drilldown>
+      </single>
+    </panel>
+  </row>
+</dashboard>

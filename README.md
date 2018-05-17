@@ -13,13 +13,15 @@
 ![Image](https://github.com/threat-hunters/threat-hunters.github.io/blob/master/screenshots/honeypots.jpg?raw=true)
 
 
-
 ### Analysis via Splunk
 
 ​	The honeypots will capture all the necessary information needed for the analysis, including IP addresses, ports, packet signature, MD5 hashes and payloads of the malware executables, and the URL requests sent to the honeypots. The goal is generate the Indicators of Compromise (IOCs) that defines the incoming threats and precisely identiy their behavior.
 
 ![Image](https://github.com/threat-hunters/threat-hunters.github.io/blob/master/screenshots/splunk_intel.jpg?raw=true)
 
+​	MITRE’s Adversaries Tactics, Techniques, and Common Knowledge (ATT&CK) for Enterprise is an adversary behavior model that could be used for understanding attacker’s behavior and improving current security.[21] Based on the matrix provided by MITRE, we created the dashboard aiming to categorize the attacks captured so far and provide a reference for future analysis and security improvement
+
+![Image](https://github.com/threat-hunters/threat-hunters.github.io/blob/master/screenshots/splunk_attacks.jpg?raw=true)
 
 
 ### Adaptive Response
